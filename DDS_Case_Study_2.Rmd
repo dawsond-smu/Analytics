@@ -1,25 +1,44 @@
 ---
-title: "Budweiser Analysis (knn/knn-means)"
+title: "DDS_Case_Study_2"
 author: "Dawson"
-date: "7/4/2020"
+date: "7/26/2020"
 output: html_document
 ---
 
 ```{r load-packages, include=FALSE}
-chooseCRANmirror(graphics=FALSE, ind=1)
-knitr::opts_chunk$set(echo = TRUE)
-pkgs <- c("ggplot2", "ggplot2", "dplyr", "tidyr", "tidyverse","caret","class","GGally","e1071","naivebayes","tidyr","ggpubr","data.table")
-install.packages(pkgs, repos = "http://cran.us.r-project.org")
+library(e1071)
+library(naivebayes)
+library(data.table)
+library(DT)
+library(forcats)
+library(ggplot2)
+library(haven)
+library(Hmisc)
+library(plotly)
+library(scales)
+library(shiny)
+library(stringi)
+library(dplyr)
+library(rsconnect)
 library(dplyr)
 library(ggplot2)
 library(caret)
 library(class)
 library(GGally)
 library(e1071)
-library(naivebayes)
 library(tidyr)
 library(ggpubr)
 library(data.table)
+library(readr)  # for read_csv
+library(knitr)  # for kable
+library(RCurl)
+install.packages(c("skimr","DataExplorer"))
+library(skimr)
+library(DataExplorer)
+library(usmap)
+library(maps)
+install.packages("statebins")
+library(statebins)
 ```
 
 ```{r include=FALSE}
@@ -211,30 +230,6 @@ icluster <- kmeans(IPA[,1:2],2,nstart = 20)
 kmeans_matrix = table(icluster$cluster,IPA$IPA)
 kmeans_matrix
 ###Observed best k-means is 30 based on 200 iterations. Our knn-means classification with a precision of 88.5% and recall of 83.5%. This model better with precision, but lacks recall.
-```
-
-
-
-```{r}
-install.packages("neuralnet")
-library(neuralnet)
-nn <- neuralnet(IPA ~ ABV + IBU, data=train, hidden=c(2,1), linear.output=FALSE, threshold=0.01, stepmax = 1E+10, rep = 25)
-nn$result.matrix
-plot(nn)
-nn$result.matrix
-
-
-#Test the resulting output
-temp_test <- subset(test, select = c("IBU","ABV"))
-head(temp_test)
-nn.results <- compute(nn, temp_test)
-results <- data.frame(actual = test$IPA, prediction = nn.results$net.result)
-results
-
-roundedresults<-sapply(results,round,digits=0)
-roundedresultsdf=data.frame(roundedresults)
-attach(roundedresultsdf)
-table(actual,prediction)
 ```
 
 9. Knock their socks off!  Find one other useful inference from the data that you feel Budweiser may be able to find value in.  You must convince them why it is important and back up your conviction with appropriate statistical evidence. 
