@@ -1,0 +1,194 @@
+"0","library(e1071)
+"
+"2","package ‘e1071’ was built under R version 4.0.2"
+"0","library(naivebayes)"
+"2","package ‘naivebayes’ was built under R version 4.0.2"
+"2","naivebayes 0.9.7 loaded
+"
+"0","library(data.table)"
+"2","Registered S3 method overwritten by 'data.table':
+  method           from
+  print.data.table     
+"
+"2","data.table 1.12.8 using 2 threads (see ?getDTthreads).  Latest news: r-datatable.com
+"
+"2","
+Attaching package: ‘data.table’
+
+"
+"2","The following object is masked from ‘package:naivebayes’:
+
+    tables
+
+"
+"0","library(DT)"
+"2","package ‘DT’ was built under R version 4.0.2"
+"2","Registered S3 methods overwritten by 'htmltools':
+  method               from         
+  print.html           tools:rstudio
+  print.shiny.tag      tools:rstudio
+  print.shiny.tag.list tools:rstudio
+"
+"2","Registered S3 method overwritten by 'htmlwidgets':
+  method           from         
+  print.htmlwidget tools:rstudio
+"
+"0","library(forcats)"
+"0","library(ggplot2)"
+"2","package ‘ggplot2’ was built under R version 4.0.2"
+"0","library(haven)"
+"0","library(Hmisc)"
+"2","package ‘Hmisc’ was built under R version 4.0.2"
+"2","Loading required package: lattice
+"
+"2","Loading required package: survival
+"
+"2","Loading required package: Formula
+"
+"2","
+Attaching package: ‘Hmisc’
+
+"
+"2","The following object is masked from ‘package:e1071’:
+
+    impute
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    format.pval, units
+
+"
+"0","library(plotly)"
+"2","package ‘plotly’ was built under R version 4.0.2"
+"2","
+Attaching package: ‘plotly’
+
+"
+"2","The following object is masked from ‘package:Hmisc’:
+
+    subplot
+
+"
+"2","The following object is masked from ‘package:ggplot2’:
+
+    last_plot
+
+"
+"2","The following object is masked from ‘package:stats’:
+
+    filter
+
+"
+"2","The following object is masked from ‘package:graphics’:
+
+    layout
+
+"
+"0","library(scales)"
+"0","library(shiny)"
+"2","package ‘shiny’ was built under R version 4.0.2"
+"2","
+Attaching package: ‘shiny’
+
+"
+"2","The following objects are masked from ‘package:DT’:
+
+    dataTableOutput, renderDataTable
+
+"
+"0","library(stringi)"
+"0","library(dplyr)"
+"2","package ‘dplyr’ was built under R version 4.0.2"
+"2","
+Attaching package: ‘dplyr’
+
+"
+"2","The following objects are masked from ‘package:Hmisc’:
+
+    src, summarize
+
+"
+"2","The following objects are masked from ‘package:data.table’:
+
+    between, first, last
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"0","library(rsconnect)"
+"2","package ‘rsconnect’ was built under R version 4.0.2"
+"2","
+Attaching package: ‘rsconnect’
+
+"
+"2","The following object is masked from ‘package:shiny’:
+
+    serverInfo
+
+"
+"0","library(dplyr)"
+"0","library(ggplot2)"
+"0","library(caret)"
+"2","package ‘caret’ was built under R version 4.0.2"
+"2","
+Attaching package: ‘caret’
+
+"
+"2","The following object is masked from ‘package:survival’:
+
+    cluster
+
+"
+"0","library(class)"
+"2","package ‘class’ was built under R version 4.0.2"
+"0","library(GGally)"
+"2","package ‘GGally’ was built under R version 4.0.2"
+"2","Registered S3 method overwritten by 'GGally':
+  method from   
+  +.gg   ggplot2
+"
+"0","library(e1071)"
+"0","library(tidyr)"
+"2","package ‘tidyr’ was built under R version 4.0.2"
+"0","library(ggpubr)"
+"2","package ‘ggpubr’ was built under R version 4.0.2"
+"0","library(data.table)"
+"0","library(readr)  # for read_csv"
+"2","
+Attaching package: ‘readr’
+
+"
+"2","The following object is masked from ‘package:scales’:
+
+    col_factor
+
+"
+"0","library(knitr)  # for kable"
+"2","package ‘knitr’ was built under R version 4.0.2"
+"0","library(RCurl)"
+"2","
+Attaching package: ‘RCurl’
+
+"
+"2","The following object is masked from ‘package:tidyr’:
+
+    complete
+
+"
+"0","library(skimr)"
+"2","package ‘skimr’ was built under R version 4.0.2"
+"0","library(DataExplorer)"
+"2","package ‘DataExplorer’ was built under R version 4.0.2"
+"0","library(usmap)"
+"0","library(maps)"
+"0","library(statebins)"
+"2","package ‘statebins’ was built under R version 4.0.2"

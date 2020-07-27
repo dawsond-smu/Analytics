@@ -53,6 +53,9 @@ PoliceUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/Analytics/ma
 Police <-read_csv(url(PoliceUrl))
 head(Police)
 
+PoliceUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/Analytics/master/PoliceBrutality/PoliceKillingsUS.csv"
+Police <-read_csv(url(PoliceUrl))
+head(Police)
 
 ```
 
