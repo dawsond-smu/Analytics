@@ -40,7 +40,7 @@ library(statebins)
 ```
 
 ```{r include=FALSE}
-##Importing the 2 separate datasets named accordingly
+#Importing the data
 BeersUrl ="https://raw.githubusercontent.com/dawsond-smu/dawsond-smu.github.io/master/Data/Beers.csv"
 Beers <-read_csv(url(BeersUrl))
 BreweriesUrl ="https://raw.githubusercontent.com/dawsond-smu/dawsond-smu.github.io/master/Data/Breweries.csv"
@@ -48,10 +48,25 @@ Breweries <-read_csv(url(BreweriesUrl))
 Beers_Brewery = merge(Beers,Breweries, by.x = "Brewery_id", by.y = "Brew_ID")
 Beers_Brewery_Omit = na.omit(Beers_Brewery)
 
+CaseStudyDataUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/CaseStudy2-data.csv"
+CaseStudyData <-read_csv(url(CaseStudyDataUrl))
+head(CaseStudyData)
 
-PoliceUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/Analytics/master/PoliceBrutality/PoliceKillingsUS.csv"
-Police <-read_csv(url(PoliceUrl))
-head(Police)
+NoSalaryUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/CaseStudy2CompSet%20No%20Salary.csv"
+NoSalary <-read_csv(url(NoSalaryUrl))
+head(NoSalary)
+
+NoAttritionUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/CaseStudy2CompSet%20No%20Attrition.csv"
+NoAttrition <-read_csv(url(NoAttritionUrl))
+head(NoAttrition)
+
+RegPredictUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/Case2PredictionsRegressEXAMPLE.csv"
+RegPredict <-read_csv(url(RegPredictUrl))
+head(RegPredict)
+
+ClassPredictUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/Case2PredictionsClassifyEXAMPLE.csv"
+ClassPredict <-read_csv(url(ClassPredictUrl))
+head(ClassPredict)
 
 
 ```
