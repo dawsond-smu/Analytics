@@ -71,7 +71,7 @@ head(CaseStudyNoSalaryNoAttrition)
 summary(CaseStudyNoSalaryNoAttrition)
 glimpse(CaseStudyNoSalaryNoAttrition)
 skim(CaseStudyNoSalaryNoAttrition)
-
+DataExplorer::create_report(CaseStudyNoSalaryNoAttrition)
 ```
 
 EDA for PPT
