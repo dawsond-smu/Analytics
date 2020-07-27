@@ -37,6 +37,8 @@ library(DataExplorer)
 library(usmap)
 library(maps)
 library(statebins)
+library(tidyverse)
+library(leaps)
 ```
 
 ```{r include=FALSE}
@@ -67,11 +69,45 @@ CaseStudyNoSalary = merge(CaseStudyData, NoSalary, all=TRUE)
 CaseStudyNoSalaryNoAttrition = merge(CaseStudyNoSalary, NoAttrition, all=TRUE)
 summary(CaseStudyNoSalaryNoAttrition)
 
-head(CaseStudyNoSalaryNoAttrition)
-summary(CaseStudyNoSalaryNoAttrition)
-glimpse(CaseStudyNoSalaryNoAttrition)
-skim(CaseStudyNoSalaryNoAttrition)
-DataExplorer::create_report(CaseStudyNoSalaryNoAttrition)
+CaseStudy = CaseStudyNoSalaryNoAttrition %>%  mutate(JobInvolvement = as.factor(JobInvolvement), 
+  JobSatisfaction = as.factor(JobSatisfaction), 
+  PerformanceRating = as.factor(PerformanceRating), 
+  RelationshipSatisfaction = as.factor(RelationshipSatisfaction), 
+  WorkLifeBalance = as.factor(WorkLifeBalance))
+
+CaseStudy_Omit = na.omit(CaseStudy)
+head(CaseStudy_Omit)
+
+head(CaseStudy_Omit)
+summary(CaseStudy_Omit)
+glimpse(CaseStudy_Omit)
+skim(CaseStudy_Omit)
+DataExplorer::create_report(CaseStudy)
+DataExplorer::create_report(CaseStudy_Omit)
+
+```
+
+```{r}
+options(na.action = "na.fail")
+
+fm1 <- lm(MonthlyRate ~ MaritalStatus + Over18, data = CaseStudy_Omit)
+dd <- dredge(fm1)
+subset(dd, delta < 4)
+
+
+```
+
+```{r}
+models <- regsubsets(MonthlyRate ~ ., data = CaseStudy_Omit)
+summary(models)
+res.sum <- summary(models)
+data.frame(
+  Adj.R2 = which.max(res.sum$adjr2),
+  CP = which.min(res.sum$cp),
+  BIC = which.min(res.sum$bic)
+)
+
+
 ```
 
 EDA for PPT
