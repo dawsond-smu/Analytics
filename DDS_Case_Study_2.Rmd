@@ -50,24 +50,27 @@ Beers_Brewery_Omit = na.omit(Beers_Brewery)
 
 CaseStudyDataUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/CaseStudy2-data.csv"
 CaseStudyData <-read_csv(url(CaseStudyDataUrl))
-head(CaseStudyData)
 
 NoSalaryUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/CaseStudy2CompSet%20No%20Salary.csv"
 NoSalary <-read_csv(url(NoSalaryUrl))
-head(NoSalary)
 
 NoAttritionUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/CaseStudy2CompSet%20No%20Attrition.csv"
 NoAttrition <-read_csv(url(NoAttritionUrl))
-head(NoAttrition)
 
 RegPredictUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/Case2PredictionsRegressEXAMPLE.csv"
 RegPredict <-read_csv(url(RegPredictUrl))
-head(RegPredict)
 
 ClassPredictUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/Case2PredictionsClassifyEXAMPLE.csv"
 ClassPredict <-read_csv(url(ClassPredictUrl))
-head(ClassPredict)
 
+CaseStudyNoSalary = merge(CaseStudyData, NoSalary, all=TRUE)
+CaseStudyNoSalaryNoAttrition = merge(CaseStudyNoSalary, NoAttrition, all=TRUE)
+summary(CaseStudyNoSalaryNoAttrition)
+
+head(CaseStudyNoSalaryNoAttrition)
+summary(CaseStudyNoSalaryNoAttrition)
+glimpse(CaseStudyNoSalaryNoAttrition)
+skim(CaseStudyNoSalaryNoAttrition)
 
 ```
 
