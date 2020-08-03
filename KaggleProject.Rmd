@@ -1,0 +1,60 @@
+---
+title: "KaggleProject"
+author: "Dawson"
+date: "8/2/2020"
+output: html_document
+---
+
+```{r load-packages, include=FALSE}
+library(e1071)
+library(naivebayes)
+library(data.table)
+library(DT)
+library(forcats)
+library(ggplot2)
+library(haven)
+library(Hmisc)
+library(plotly)
+library(scales)
+library(shiny)
+library(stringi)
+library(dplyr)
+library(rsconnect)
+library(dplyr)
+library(ggplot2)
+library(caret)
+library(class)
+library(GGally)
+library(e1071)
+library(tidyr)
+library(ggpubr)
+library(data.table)
+library(readr)  # for read_csv
+library(knitr)  # for kable
+library(RCurl)
+library(skimr)
+library(DataExplorer)
+library(usmap)
+library(maps)
+library(statebins)
+```
+
+```{r include=FALSE}
+##Importing the 2 separate datasets named accordingly
+BeersUrl ="https://raw.githubusercontent.com/dawsond-smu/dawsond-smu.github.io/master/Data/Beers.csv"
+Beers <-read_csv(url(BeersUrl))
+BreweriesUrl ="https://raw.githubusercontent.com/dawsond-smu/dawsond-smu.github.io/master/Data/Breweries.csv"
+Breweries <-read_csv(url(BreweriesUrl))
+Beers_Brewery = merge(Beers,Breweries, by.x = "Brewery_id", by.y = "Brew_ID")
+Beers_Brewery_Omit = na.omit(Beers_Brewery)
+
+
+PoliceUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/Analytics/master/PoliceBrutality/PoliceKillingsUS.csv"
+Police <-read_csv(url(PoliceUrl))
+head(Police)
+
+PoliceUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/Analytics/master/PoliceBrutality/PoliceKillingsUS.csv"
+Police <-read_csv(url(PoliceUrl))
+head(Police)
+
+```
