@@ -37,24 +37,81 @@ library(DataExplorer)
 library(usmap)
 library(maps)
 library(statebins)
+library(sasLM)
 ```
 
 ```{r include=FALSE}
-##Importing the 2 separate datasets named accordingly
-BeersUrl ="https://raw.githubusercontent.com/dawsond-smu/dawsond-smu.github.io/master/Data/Beers.csv"
-Beers <-read_csv(url(BeersUrl))
-BreweriesUrl ="https://raw.githubusercontent.com/dawsond-smu/dawsond-smu.github.io/master/Data/Breweries.csv"
-Breweries <-read_csv(url(BreweriesUrl))
-Beers_Brewery = merge(Beers,Breweries, by.x = "Brewery_id", by.y = "Brew_ID")
-Beers_Brewery_Omit = na.omit(Beers_Brewery)
+#Inserting Data
+TestUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/test.csv"
+Test <-read_csv(url(TestUrl))
+TrainUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/train.csv"
+Train <-read_csv(url(TrainUrl))
+```
 
 
-PoliceUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/Analytics/master/PoliceBrutality/PoliceKillingsUS.csv"
-Police <-read_csv(url(PoliceUrl))
-head(Police)
+1. Provide your client with the estimate (or estimates if it varies by neighborhood) as well as confidence intervals for any estimate(s) you provide. 
+a. Address EDA and Assumptions. Investigate the relationship between Sale Price and Living SqrFt.
+```{r echo=FALSE}
+glimpse(Train)
+TrainByNeighborhood = Train %>% filter(Neighborhood %in% c("NAmes", "Edwards","BrkSide")) %>% mutate(Living = as.numeric(round(GrLivArea,digits=-2)), LogSalePrice = log(SalePrice), LogLiving = log(round(GrLivArea,digits=-2))) %>% select(Id, Living, LogLiving,  Neighborhood, LogSalePrice, SalePrice)
+TrainByNeighborhood[order(TrainByNeighborhood$Id),]
+TrainByNeighborhood %>% ggpairs() + labs(main = "ABV by IBU Distribution")
+#Identify Outliers & Remove high leverage/Extreme outliers
+boxplot(TrainByNeighborhood$LogSalePrice, plot=FALSE)$out
+outliers <- boxplot(TrainByNeighborhood$LogSalePrice, plot=FALSE)$out
+x<-TrainByNeighborhood
+TrainByNeighborhoodOutliers <- x[-which(x$LogSalePrice %in% outliers),]
+glimpse(TrainByNeighborhoodOutliers)
+```
+b. Multiple Linear Regression Model
+```{r echo=TRUE}
+##
+Model = lm(LogSalePrice ~ LogLiving + Neighborhood + LogLiving*Neighborhood, TrainByNeighborhood)
+ModelNoDiff = lm(LogSalePrice ~ LogLiving, TrainByNeighborhood)
+summary(ModelNoDiff)
+confint(ModelNoDiff)
+par(mfrow = c(2, 2))  # Split the plotting panel into a 2 x 2 grid
+plot(Model)
+summary(Model)
+confint(Model)
+RSS <- c(crossprod(Model$residuals))
+MSE <- RSS / length(Model$residuals)
+RMSE <- sqrt(MSE)
+sig2 <- RSS / Model$df.residual
+RSS
+MSE
+RMSE
+sig2
+ggplot(data=Model, aes(Model$residuals)) +
+geom_histogram(binwidth = 1, color = "black", fill = "purple4") +
+theme(panel.background = element_rect(fill = "white"),
+axis.line.x=element_line(),
+axis.line.y=element_line()) +
+ggtitle("Histogram for Model Residuals")
+TestLogLiving = Test %>% filter(Neighborhood %in% c("NAmes", "Edwards","BrkSide")) %>% mutate(LogLiving = as.numeric(log(GrLivArea/100)))
+PredictLogSalePrice = predict(Model, newdata = TestLogLiving, interval = 'prediction')
+glimpse(PredictLogSalePrice)
+head(PredictLogSalePrice)
+```
 
-PoliceUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/Analytics/master/PoliceBrutality/PoliceKillingsUS.csv"
-Police <-read_csv(url(PoliceUrl))
-head(Police)
 
+2. Multiple Regression (Forwards, Backwards, Step-wise) + Custom
+```{r}
+TrainLog = Train %>% mutate(Living = as.numeric(GrLivArea/100), LogSalePrice = log(SalePrice), LogLiving = log(GrLivArea/100))
+TestLog = Test %>% mutate(Living = as.numeric(GrLivArea/100), LogLiving = log(GrLivArea/100))
+create_report(TrainLog, y = "LogSalePrice")
+write.csv(TrainLog,"C:/Users/Dawson/Documents/GitHub/Analytics/Kaggle/Kaggle/SASInput.csv", row.names = FALSE)
+write.csv(TestLog,"C:/Users/Dawson/Documents/GitHub/Analytics/Kaggle/Kaggle/SASOutput.csv", row.names = FALSE)
+```
+```{r}
+Model = lm(LogSalePrice ~ ., TrainLog, family = TRUE)
+Model = sasLM::GLM(LogSalePrice ~ LogLiving + Neighborhood, TrainLog) # SAS PROC GLM
+summary(Model)
+formula(Model)
+backward = step(Model, direction="backward", scope=formula(Model))
+forward = step(Model, direction="forward", scope=formula(Model))
+stepwise = step(Model, direction="both", scope=formula(Model))
+summary(forward)
+summary(backward)
+summary(stepwise)
 ```
