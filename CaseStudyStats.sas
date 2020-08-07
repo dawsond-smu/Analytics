@@ -12,6 +12,10 @@ DATA TEST_Log;
 SET TEST;
 LogSalePrice = .;
 run;
+DATA TRAIN;
+SET TRAIN (DROP = GRLIVAREA);
+LIVING = ROUND(LIVING,100);
+RUN;
 PROC SQL;CREATE TABLE NEIGHBORHOODS AS SELECT DISTINCT NEIGHBORHOOD FROM TRAIN;QUIT;
 DATA AMES_IOWA;
 SET TRAIN
@@ -37,13 +41,13 @@ proc glmselect data=Train TESTDATA= work.TEST_Log plots=all;
    HouseStyle	OverallQual	OverallCond	YearBuilt	YearRemodAdd	RoofStyle	RoofMatl	Exterior1st
    Exterior2nd	MasVnrType	MasVnrArea	ExterQual	ExterCond	Foundation	BsmtQual	BsmtCond	
    BsmtExposure	BsmtFinType1	BsmtFinSF1	BsmtFinType2	BsmtFinSF2	BsmtUnfSF	TotalBsmtSF	
-   Heating	HeatingQC	CentralAir	Electrical	_1stFlrSF	_2ndFlrSF	LowQualFinSF	GrLivArea
+   Heating	HeatingQC	CentralAir	Electrical	_1stFlrSF	_2ndFlrSF	LowQualFinSF
    BsmtFullBath	BsmtHalfBath	FullBath	HalfBath	BedroomAbvGr	KitchenAbvGr	KitchenQual
    TotRmsAbvGrd	Functional	Fireplaces	FireplaceQu	GarageType	GarageYrBlt	GarageFinish	GarageCars
    GarageArea	GarageQual	GarageCond	PavedDrive	WoodDeckSF	OpenPorchSF	EnclosedPorch	_3SsnPorch
    ScreenPorch	PoolArea	PoolQC	Fence	MiscFeature	MiscVal	MoSold	YrSold	SaleType	SaleCondition
    Living	LogLiving
-/ selection = Forward(select = ADJRSQ stop = CV SLE = .15) details=all stats=all;
+/ selection = Forward(select = ADJRSQ stop = CV SLE = .15) /*details=all stats=all*/;
 run;
 /*
 
@@ -64,13 +68,13 @@ proc glmselect data=Train TESTDATA= work.TEST_Log plots=all;
    HouseStyle	OverallQual	OverallCond	YearBuilt	YearRemodAdd	RoofStyle	RoofMatl	Exterior1st
    Exterior2nd	MasVnrType	MasVnrArea	ExterQual	ExterCond	Foundation	BsmtQual	BsmtCond	
    BsmtExposure	BsmtFinType1	BsmtFinSF1	BsmtFinType2	BsmtFinSF2	BsmtUnfSF	TotalBsmtSF	
-   Heating	HeatingQC	CentralAir	Electrical	_1stFlrSF	_2ndFlrSF	LowQualFinSF	GrLivArea
+   Heating	HeatingQC	CentralAir	Electrical	_1stFlrSF	_2ndFlrSF	LowQualFinSF	
    BsmtFullBath	BsmtHalfBath	FullBath	HalfBath	BedroomAbvGr	KitchenAbvGr	KitchenQual
    TotRmsAbvGrd	Functional	Fireplaces	FireplaceQu	GarageType	GarageYrBlt	GarageFinish	GarageCars
    GarageArea	GarageQual	GarageCond	PavedDrive	WoodDeckSF	OpenPorchSF	EnclosedPorch	_3SsnPorch
    ScreenPorch	PoolArea	PoolQC	Fence	MiscFeature	MiscVal	MoSold	YrSold	SaleType	SaleCondition
    Living	LogLiving
-/ selection = Backward(select = ADJRSQ stop = CV slentry = .15 SLE = .15) details=all stats=all;
+/ selection = Backward(select = ADJRSQ stop = CV CHOOSE = CV) /*details=all stats=all*/;
 run;
 /*
 
@@ -91,13 +95,13 @@ proc glmselect data=Train TESTDATA= work.TEST_Log plots=all;
    HouseStyle	OverallQual	OverallCond	YearBuilt	YearRemodAdd	RoofStyle	RoofMatl	Exterior1st
    Exterior2nd	MasVnrType	MasVnrArea	ExterQual	ExterCond	Foundation	BsmtQual	BsmtCond	
    BsmtExposure	BsmtFinType1	BsmtFinSF1	BsmtFinType2	BsmtFinSF2	BsmtUnfSF	TotalBsmtSF	
-   Heating	HeatingQC	CentralAir	Electrical	_1stFlrSF	_2ndFlrSF	LowQualFinSF	GrLivArea
+   Heating	HeatingQC	CentralAir	Electrical	_1stFlrSF	_2ndFlrSF	LowQualFinSF	
    BsmtFullBath	BsmtHalfBath	FullBath	HalfBath	BedroomAbvGr	KitchenAbvGr	KitchenQual
    TotRmsAbvGrd	Functional	Fireplaces	FireplaceQu	GarageType	GarageYrBlt	GarageFinish	GarageCars
    GarageArea	GarageQual	GarageCond	PavedDrive	WoodDeckSF	OpenPorchSF	EnclosedPorch	_3SsnPorch
    ScreenPorch	PoolArea	PoolQC	Fence	MiscFeature	MiscVal	MoSold	YrSold	SaleType	SaleCondition
    Living	LogLiving
-/ selection = STEPWISE(select = ADJRSQ stop = CV slentry = .15 SLE = .15) details=all stats=all;
+/ selection = STEPWISE(select = ADJRSQ stop = CV slentry = .15 SLE = .15) /*details=all stats=all*/;
 run;
 /*
 
@@ -105,9 +109,10 @@ Custom Model
 
 */
 proc glm data = Train PLOTS=all;
-	CLASS Neighborhood MSZoning HouseStyle CentralAir GarageFinish BsmtQual ExterQual KitchenQual LotFrontage BsmtFinType1;
+	CLASS Neighborhood MSZoning HouseStyle CentralAir GarageFinish SaleCondition 
+	BsmtQual ExterQual KitchenQual LotFrontage BsmtFinType1;
    model LogSalePrice = LogLiving Neighborhood MSZoning
-   		HouseStyle GarageArea  GarageCars OverallQual OverallCond
-   		TotalBsmtSF CentralAir GarageFinish ExterQual KitchenQual BsmtQual BsmtFinType1 BsmtFinType1*TotalBsmtSF LotFrontage Neighborhood*LogLiving/ solution;
+   		HouseStyle GarageArea  GarageCars OverallQual 
+   		TotalBsmtSF CentralAir GarageFinish ExterQual SaleCondition KitchenQual BsmtQual BsmtFinType1 BsmtFinType1*TotalBsmtSF LotFrontage Neighborhood*LogLiving/ solution;
 run;
 ods graphics off;
