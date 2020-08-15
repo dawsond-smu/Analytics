@@ -41,6 +41,7 @@ library(randomForest)
 library(caTools)
 library(xgboost)
 library(markdown)
+library(shiny)
 CaseStudyDataUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/CaseStudy2-data.csv"
 CaseStudyData <-read_csv(url(CaseStudyDataUrl))
 NoSalaryUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/CaseStudy2CompSet%20No%20Salary.csv"
@@ -104,9 +105,7 @@ datasetcharacter = CaseStudy %>% select_if(is.character)
 
 function(input, output) {
   
-  dataset <- reactive({
-    CaseStudy[sample(nrow(CaseStudy), input$sampleSize),]
-  })
+  dataset <- CaseStudy
   
   output$plot <- renderPlot({
     

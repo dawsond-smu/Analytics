@@ -40,6 +40,7 @@ library(randomForest)
 library(caTools)
 library(xgboost)
 library(markdown)
+library(shiny)
 CaseStudyDataUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/CaseStudy2-data.csv"
 CaseStudyData <-read_csv(url(CaseStudyDataUrl))
 NoSalaryUrl ="https://raw.githubusercontent.com/dawsond-smu/Analytics/master/CaseStudy2CompSet%20No%20Salary.csv"
@@ -116,10 +117,6 @@ fluidPage(
     column(3,
            h4("Case Study Explorer"),
            h5(" DDS Analytics"),
-           sliderInput('sampleSize', 'Sample Size', 
-                       min=1, max=nrow(dataset),
-                       value=min(1000, nrow(dataset)), 
-                       step=500, round=0),
            br(),
            checkboxInput('jitter', 'Jitter'),
            checkboxInput('smooth', 'Smooth'),
@@ -149,25 +146,33 @@ tabPanel("Data",
                       selectInput("Attrition",
                                   "Attrition:",
                                   c("All",
-                                    unique(as.character(mpg$Attrition))))
+                                    unique(as.character(dataset$Attrition))))
                ),
                column(4,
                       selectInput("MonthlyIncomeCategory",
                                   "MonthlyIncomeCategory:",
                                   c("All",
-                                    unique(as.character(mpg$MonthlyIncomeCategory))))
+                                    unique(as.character(dataset$MonthlyIncomeCategory))))
                ),
                column(4,
                       selectInput("JobRole",
                                   "JobRole:",
                                   c("All",
-                                    unique(as.character(mpg$JobRole))))
+                                    unique(as.character(dataset$JobRole))))
                )
              ),
              # Create a new row for the table.
              DT::dataTableOutput("table")
            )
-)) 
+),
+navbarMenu("More",
+           tabPanel("Table",
+                    DT::dataTableOutput("table")
+           ))
+)
+
+
+
            
            
            
