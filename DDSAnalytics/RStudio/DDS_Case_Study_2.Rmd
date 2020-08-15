@@ -214,12 +214,9 @@ axis.line.y=element_line()) +
 ggtitle("Histogram for Model Residuals")
 CaseStudyIncomePredict = CaseStudy[!is.na(CaseStudy$MonthlyIncome),]
 PredictIncome = predict(models, newdata = CaseStudyIncomePredict, interval = 'prediction')
-head(PredictIncome)
-
 data2 = data.frame(CaseStudyIncomePredict, regression = PredictIncome)
 PredictedIncome = data2 %>% mutate(MonthlyIncome = as.numeric(regression.fit)) %>% select(ID, MonthlyIncome) %>% na.omit()
-skim(PredictedIncome)
-write.csv(PredictedIncome,"C:/Users/Dawson/Documents/GitHub/Analytics/Kaggle/Kaggle/DDS_LM_Predictions.csv", row.names = FALSE)
+#write.csv(PredictedIncome,"C:/Users/Dawson/Documents/GitHub/Analytics/Kaggle/Kaggle/DDS_LM_Predictions.csv", row.names = FALSE)
 ```
 
 2.  Knn/Bayes for categorizing Attrition
@@ -230,7 +227,6 @@ CaseStudy2 = CaseStudy %>% select(-MonthlyIncome,-LogMonthlyIncome) %>% mutate(A
 CaseStudyAttrition = CaseStudy2[!is.na(CaseStudy2$Attrition),]
 #create_report(CaseStudyAttrition, y = "Attrition")
 Attrition = CaseStudyAttrition %>% mutate(WorkLifeBalance = as.integer(as.factor(WorkLifeBalance)),JobInvolvement = as.integer(as.factor(JobInvolvement)), MaritalStatus = as.integer(as.factor(MaritalStatus)), DistanceFromHome = log(as.integer(as.factor(DistanceFromHome))), TrainingTimesLastYear = as.integer(as.factor(TrainingTimesLastYear)), Department = as.integer(as.factor(Department)), OverTime = as.integer(as.factor(OverTime)), JobRole = as.integer(as.factor(JobRole)), AttritionNum = as.integer(as.factor(Attrition)), JobSatisfaction = as.integer(as.factor(JobSatisfaction)), PerformanceRating = as.integer(as.factor(PerformanceRating)), Attrition = as.factor(Attrition),  EducationField = as.integer(as.factor(EducationField)), LogAge = as.numeric(log(Age)), LogYearsWithCurrManager = log(as.integer(as.factor(YearsWithCurrManager))), EnvironmentSatisfaction = as.integer(as.factor(EnvironmentSatisfaction))) %>% select(ID, WorkLifeBalance, JobInvolvement, MaritalStatus, DistanceFromHome,OverTime, LogAge, LogYearsWithCurrManager, LogJobLevel, PerformanceRating, EducationField, NumCompaniesWorked, Attrition)
-skim(Attrition)
 fit.1 <- glm(Attrition == "No" ~ ., data = Attrition)
 summary(fit.1)
 glimpse(Attrition)
@@ -254,7 +250,6 @@ prop.table(table)
 #Explore some best ideas for better k-values; Not sure if it can be improved
 AttritionNum = CaseStudyAttrition %>% mutate(WorkLifeBalance = as.integer(as.factor(WorkLifeBalance)),JobInvolvement = as.integer(as.factor(JobInvolvement)), MaritalStatus = as.integer(as.factor(MaritalStatus)), DistanceFromHome = log(as.integer(as.factor(DistanceFromHome))), TrainingTimesLastYear = as.integer(as.factor(TrainingTimesLastYear)), Department = as.integer(as.factor(Department)), OverTime = as.integer(as.factor(OverTime)), JobRole = as.integer(as.factor(JobRole)), AttritionNum = as.integer(as.factor(Attrition)), JobSatisfaction = as.integer(as.factor(JobSatisfaction)),Attrition = as.factor(Attrition), LogAge = as.numeric(log(Age)), LogYearsWithCurrManager = log(as.integer(as.factor(YearsWithCurrManager))), EnvironmentSatisfaction = as.integer(as.factor(EnvironmentSatisfaction)), JobLevel = as.integer(as.factor(JobLevel)))
 plot_qq(AttritionNum, by = "Attrition")
-skim(AttritionNum)
 cr1 <- AttritionNum %>% 
     select_if(is.numeric) %>% 
     cor(use = "pair")
@@ -303,11 +298,8 @@ table(pred,y$Attrition)
 cm2 = table(pred,y$Attrition)
 sensitivity(cm2)
 specificity(cm2)
-head(pred)
 data3 = data.frame(y, PredictedAttrition = pred)
-skim(data3)
-head(data3)
 PredictedAttrition = data3 %>% mutate(PredictedAttrition = as.factor(PredictedAttrition)) %>% select(ID, PredictedAttrition) %>% na.omit()
 skim(PredictedAttrition)
-write.csv(PredictedAttrition,"C:/Users/Dawson/Documents/GitHub/Analytics/Kaggle/Kaggle/DDS_SVM_Class_Predictions.csv", row.names = FALSE)
+#write.csv(PredictedAttrition,"https://raw.githubusercontent.com/dawsond-smu/Analytics/master/DDS_SVM_Class_Predictions.csv", row.names = FALSE)
 ```
