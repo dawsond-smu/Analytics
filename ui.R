@@ -57,23 +57,23 @@ CaseStudyNoSalaryNoAttrition = merge(CaseStudyNoSalary, NoAttrition, all=TRUE)
 summary(CaseStudyNoSalaryNoAttrition)
 #Modify the variables for Analysis
 CaseStudy = CaseStudyNoSalaryNoAttrition %>%  mutate(
-  JobInvolvement = as.numeric(as.factor(JobInvolvement)), 
-  JobLevel = as.numeric(as.factor(JobLevel)),
-  JobSatisfaction = as.numeric(as.factor(JobSatisfaction)), 
-  PerformanceRating = as.numeric(as.factor(PerformanceRating)), 
-  RelationshipSatisfaction = as.numeric(as.factor(RelationshipSatisfaction)), 
-  EnvironmentSatisfaction = as.numeric(as.factor(EnvironmentSatisfaction)),
+  JobInvolvement = as.integer(as.factor(JobInvolvement)), 
+  JobLevel = as.integer(as.factor(JobLevel)),
+  JobSatisfaction = as.integer(as.factor(JobSatisfaction)), 
+  PerformanceRating = as.integer(as.factor(PerformanceRating)), 
+  RelationshipSatisfaction = as.integer(as.factor(RelationshipSatisfaction)), 
+  EnvironmentSatisfaction = as.integer(as.factor(EnvironmentSatisfaction)),
   TrainingTimesLastYear = as.integer(as.factor(TrainingTimesLastYear)),
-  WorkLifeBalance = as.numeric(as.factor(WorkLifeBalance)),
+  WorkLifeBalance = as.integer(as.factor(WorkLifeBalance)),
   MaritalStatus = as.factor(MaritalStatus),
   Department = as.factor(Department),
   Gender = as.factor(Gender),
   BusinessTravel = as.factor(BusinessTravel),
   JobRole = as.factor(JobRole),
-  Over18 = as.numeric(as.factor(Over18)),
-  OverTime = as.numeric(as.factor(OverTime)),
+  Over18 = as.integer(as.factor(Over18)),
+  OverTime = as.integer(as.factor(OverTime)),
   Department= as.factor(Department), 
-  StockOptionLevel = as.numeric(as.factor(StockOptionLevel)),
+  StockOptionLevel = as.integer(as.factor(StockOptionLevel)),
   LogMonthlyIncome = log(MonthlyIncome),
   LogDistanceFromHome = log(DistanceFromHome),
   LogJobLevel = log(JobLevel),
@@ -83,8 +83,8 @@ CaseStudy = CaseStudyNoSalaryNoAttrition %>%  mutate(
       RelationshipSatisfaction == 1 ~ 0,
       TRUE ~ 1,
     ),
-  NumCompaniesWorked = as.numeric(as.factor(NumCompaniesWorked)),
-  AttritionNum = as.numeric(as.factor(Attrition)),
+  NumCompaniesWorked = as.integer(NumCompaniesWorked),
+  AttritionNum = as.integer(as.factor(Attrition)),
   GenderNum = 
     as.numeric(as.factor(case_when(
       Gender == 'Female' ~ 0,
@@ -92,7 +92,7 @@ CaseStudy = CaseStudyNoSalaryNoAttrition %>%  mutate(
     ))),
   Gender = as.factor(Gender),
   Department = as.factor(Department),
-  MonthlyIncomeCategory = as.numeric(as.factor(MonthlyIncome))
+  MonthlyIncomeCategory = as.integer(as.factor(MonthlyIncome))
   
 )
 
@@ -103,8 +103,8 @@ dataset <- CaseStudy
 datasetnumeric = CaseStudy %>% select_if(is.numeric)
 datasetcharacter = CaseStudy %>% select_if(is.character)
 
-navbarPage("Navbar!",
-           tabPanel("Plot",
+navbarPage("Welcome to DDS Analytics: Case Study 2",
+           tabPanel("Plot EDA",
 fluidPage(
   
   title = "Case Study Explorer",
@@ -116,17 +116,17 @@ fluidPage(
   fluidRow(
     column(3,
            h4("Case Study Explorer"),
-           h5(" DDS Analytics"),
+           h5("DDS Analytics"),
            br(),
            checkboxInput('jitter', 'Jitter'),
            checkboxInput('smooth', 'Smooth'),
            checkboxInput('lm', 'Lm Model Graph')
     ),
     column(4, offset = 1,
-           selectInput('x', 'X', names(datasetnumeric)),
-           selectInput('y', 'Y', names(datasetnumeric), names(datasetnumeric)[[2]]),
-           selectInput('color', 'Color', c('None', names(datasetcharacter))),
-           selectInput('fill', 'Fill', c('None',names(datasetcharacter)))
+           selectInput('x', 'X', names(dataset[sapply(dataset, is.numeric)])),
+           selectInput('y', 'Y', names(dataset[sapply(dataset, is.numeric)])),
+           selectInput('color', 'Color', c('None', names(dataset[sapply(dataset, is.factor)]))),
+           selectInput('fill', 'Fill', c('None',names(dataset[sapply(dataset, is.factor)])))
     ),
     column(4,
            selectInput('facet_row', 'Facet Row',
@@ -138,7 +138,7 @@ fluidPage(
 )),
 tabPanel("Data",
          fluidPage(
-             titlePanel("Basic DataTable"),
+             titlePanel("Case Study Data"),
              
              # Create a new Row in the UI for selectInputs
              fluidRow(
@@ -147,12 +147,6 @@ tabPanel("Data",
                                   "Attrition:",
                                   c("All",
                                     unique(as.character(dataset$Attrition))))
-               ),
-               column(4,
-                      selectInput("MonthlyIncomeCategory",
-                                  "MonthlyIncomeCategory:",
-                                  c("All",
-                                    unique(as.character(dataset$MonthlyIncomeCategory))))
                ),
                column(4,
                       selectInput("JobRole",
@@ -164,12 +158,8 @@ tabPanel("Data",
              # Create a new row for the table.
              DT::dataTableOutput("table")
            )
-),
-navbarMenu("More",
-           tabPanel("Table",
-                    DT::dataTableOutput("table")
-           ))
 )
+           )
 
 
 

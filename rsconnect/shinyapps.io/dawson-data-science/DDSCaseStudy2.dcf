@@ -1,0 +1,13 @@
+name: DDSCaseStudy2
+title: DDSCaseStudy2
+username:
+account: dawson-data-science
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2672504
+bundleId: 3518614
+url: https://dawson-data-science.shinyapps.io/DDSCaseStudy2/
+when: 1597471524.63738
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|Case2PredictionsClassifyEXAMPLE.csv|Case2PredictionsRegressEXAMPLE.csv|CaseStudy2-data.csv|CaseStudy2.docx|CaseStudy2CompSet No Attrition.csv|CaseStudy2CompSet No Salary.csv|CaseStudy2CompSet No Salary.xlsx|CaseStudyStats-results (1).pdf|CaseStudyStats-results (2).pdf|CaseStudyStats-results.pdf|CaseStudyStats-results.rtf|CaseStudyStats.sas|Code_ CaseStudyStats.sas.pdf|data_description.txt|Dawson Farrow Kaggle Project.docx|DDS_Case_Study_2.Rmd|DDS_LM_Predictions.csv|DDS_SVM_Class_Predictions.csv|KAGGLE_BACKWARD_SELECTION (1).csv|KAGGLE_BACKWARD_SELECTION.csv|KAGGLE_CUSTOM_SELECTION (1).csv|KAGGLE_CUSTOM_SELECTION.csv|KAGGLE_FORWARD_SELECTION (1).csv|KAGGLE_FORWARD_SELECTION.csv|KAGGLE_STEPWISE_SELECTION (1).csv|KAGGLE_STEPWISE_SELECTION.csv|KaggleProject.Rmd|README.md|report.html|sample_submission.csv|SASInput.csv|SASOutput.csv|test.csv|train.csv|trainSAS.txt

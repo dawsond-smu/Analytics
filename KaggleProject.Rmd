@@ -100,8 +100,8 @@ head(PredictLogSalePrice)
 TrainLog = Train %>% mutate(Living = as.numeric(GrLivArea/100), LogSalePrice = log(SalePrice), LogLiving = log(GrLivArea/100))
 TestLog = Test %>% mutate(Living = as.numeric(GrLivArea/100), LogLiving = log(GrLivArea/100))
 create_report(TrainLog, y = "LogSalePrice")
-write.csv(TrainLog,"C:/Users/Dawson/Documents/GitHub/Analytics/Kaggle/Kaggle/SASInput.csv", row.names = FALSE)
-write.csv(TestLog,"C:/Users/Dawson/Documents/GitHub/Analytics/Kaggle/Kaggle/SASOutput.csv", row.names = FALSE)
+#write.csv(TrainLog,"C:/Users/Dawson/Documents/GitHub/Analytics/Kaggle/Kaggle/SASInput.csv", row.names = FALSE)
+#write.csv(TestLog,"C:/Users/Dawson/Documents/GitHub/Analytics/Kaggle/Kaggle/SASOutput.csv", row.names = FALSE)
 ```
 ```{r}
 Model = lm(LogSalePrice ~ ., TrainLog, family = TRUE)

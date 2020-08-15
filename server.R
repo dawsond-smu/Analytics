@@ -58,23 +58,23 @@ CaseStudyNoSalaryNoAttrition = merge(CaseStudyNoSalary, NoAttrition, all=TRUE)
 summary(CaseStudyNoSalaryNoAttrition)
 #Modify the variables for Analysis
 CaseStudy = CaseStudyNoSalaryNoAttrition %>%  mutate(
-  JobInvolvement = as.numeric(as.factor(JobInvolvement)), 
-  JobLevel = as.numeric(as.factor(JobLevel)),
-  JobSatisfaction = as.numeric(as.factor(JobSatisfaction)), 
-  PerformanceRating = as.numeric(as.factor(PerformanceRating)), 
-  RelationshipSatisfaction = as.numeric(as.factor(RelationshipSatisfaction)), 
-  EnvironmentSatisfaction = as.numeric(as.factor(EnvironmentSatisfaction)),
+  JobInvolvement = as.integer(as.factor(JobInvolvement)), 
+  JobLevel = as.integer(as.factor(JobLevel)),
+  JobSatisfaction = as.integer(as.factor(JobSatisfaction)), 
+  PerformanceRating = as.integer(as.factor(PerformanceRating)), 
+  RelationshipSatisfaction = as.integer(as.factor(RelationshipSatisfaction)), 
+  EnvironmentSatisfaction = as.integer(as.factor(EnvironmentSatisfaction)),
   TrainingTimesLastYear = as.integer(as.factor(TrainingTimesLastYear)),
-  WorkLifeBalance = as.numeric(as.factor(WorkLifeBalance)),
+  WorkLifeBalance = as.integer(as.factor(WorkLifeBalance)),
   MaritalStatus = as.factor(MaritalStatus),
   Department = as.factor(Department),
   Gender = as.factor(Gender),
   BusinessTravel = as.factor(BusinessTravel),
   JobRole = as.factor(JobRole),
-  Over18 = as.numeric(as.factor(Over18)),
-  OverTime = as.numeric(as.factor(OverTime)),
+  Over18 = as.integer(as.factor(Over18)),
+  OverTime = as.integer(as.factor(OverTime)),
   Department= as.factor(Department), 
-  StockOptionLevel = as.numeric(as.factor(StockOptionLevel)),
+  StockOptionLevel = as.integer(as.factor(StockOptionLevel)),
   LogMonthlyIncome = log(MonthlyIncome),
   LogDistanceFromHome = log(DistanceFromHome),
   LogJobLevel = log(JobLevel),
@@ -84,15 +84,16 @@ CaseStudy = CaseStudyNoSalaryNoAttrition %>%  mutate(
       RelationshipSatisfaction == 1 ~ 0,
       TRUE ~ 1,
     ),
-  NumCompaniesWorked = as.numeric(as.factor(NumCompaniesWorked)),
-  AttritionNum = as.numeric(as.factor(Attrition)),
+  NumCompaniesWorked = as.integer(NumCompaniesWorked),
+  AttritionNum = as.integer(as.factor(Attrition)),
   GenderNum = 
     as.numeric(as.factor(case_when(
       Gender == 'Female' ~ 0,
       TRUE ~ 1,
     ))),
   Gender = as.factor(Gender),
-  Department = as.factor(Department)
+  Department = as.factor(Department),
+  MonthlyIncomeCategory = as.integer(as.factor(MonthlyIncome))
   
 )
 
@@ -109,7 +110,8 @@ function(input, output) {
   
   output$plot <- renderPlot({
     
-    p <- ggplot(dataset(), aes_string(x=input$x, y=input$y)) + geom_point()
+    p <- ggplot(dataset, aes_string(x=input$x, y=input$y)) + geom_point()
+    
     
     if (input$color != 'None')
       p <- p + aes_string(color=input$color)
@@ -127,7 +129,7 @@ function(input, output) {
       p <- p + geom_smooth()
     
     if (input$lm)
-      p <- p + stat_smooth(method = "lm", col = "red")
+      p <- p + stat_smooth(method = "lm", col = "red") + stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)
     
     print(p)
     
@@ -138,10 +140,7 @@ function(input, output) {
     if (input$Attrition != "All") {
       data <- data[data$Attrition == input$Attrition,]
     }
-    if (input$cyl != "All") {
-      data <- data[data$MonthlyIncomeCategory == input$MonthlyIncomeCategory,]
-    }
-    if (input$trans != "All") {
+    if (input$JobRole != "All") {
       data <- data[data$JobRole == input$JobRole,]
     }
     data
