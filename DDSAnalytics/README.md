@@ -1,97 +1,92 @@
-#Kaggle Project Description
+#Case Study 2 Description
 ##
 
-Ask a home buyer to describe their dream house, and they probably won't begin with the height of the basement ceiling or
-the proximity to an east-west railroad. But this Kaggle competition's dataset proves that much more influences price 
-negotiations than the number of bedrooms or the presence of a white-picket fence.
+Analyst: Dawson
 
-With 79 explanatory variables describing (almost) every aspect of residential homes in Ames, Iowa, this competition challenges you to predict the final price of each home.
+DDSAnalytics is an analytics company that specializes in talent management solutions for Fortune 100 companies.   
+Talent management is defined as the iterative process of developing and retaining employees.   
+It may include workforce planning, employee training programs, identifying high-potential employees and reducing/preventing voluntary employee turnover (attrition). To gain a competitive edge over its competition, DDSAnalytics is planning to leverage data science for talent management. The executive leadership has identified predicting employee turnover as its first application of data science for talent management. Before the business greenlights the project, they have tasked your data science team to conduct an analysis of existing employee data. 
 
-File descriptions
-train.csv - the training set
-test.csv - the test set
-data_description.txt - full description of each column, originally prepared by Dean De Cock but lightly edited to match the column names used here
-sample_submission.csv - a benchmark submission from a linear regression on year and month of sale, lot square footage, and number of bedrooms
-Data fields
-Here's a brief version of what you'll find in the data description file.
+Tabs
+- Data: csv(s) used in analysis
+- Documentation: Provided context docuuments
+- Presentation: Youtube & Powerpoint Files
+- Rshiny: ui/server files
+- RStudio: Rmd files and R related docs
 
-SalePrice - the property's sale price in dollars. This is the target variable that you're trying to predict.
-MSSubClass: The building class
-MSZoning: The general zoning classification
-LotFrontage: Linear feet of street connected to property
-LotArea: Lot size in square feet
-Street: Type of road access
-Alley: Type of alley access
-LotShape: General shape of property
-LandContour: Flatness of the property
-Utilities: Type of utilities available
-LotConfig: Lot configuration
-LandSlope: Slope of property
-Neighborhood: Physical locations within Ames city limits
-Condition1: Proximity to main road or railroad
-Condition2: Proximity to main road or railroad (if a second is present)
-BldgType: Type of dwelling
-HouseStyle: Style of dwelling
-OverallQual: Overall material and finish quality
-OverallCond: Overall condition rating
-YearBuilt: Original construction date
-YearRemodAdd: Remodel date
-RoofStyle: Type of roof
-RoofMatl: Roof material
-Exterior1st: Exterior covering on house
-Exterior2nd: Exterior covering on house (if more than one material)
-MasVnrType: Masonry veneer type
-MasVnrArea: Masonry veneer area in square feet
-ExterQual: Exterior material quality
-ExterCond: Present condition of the material on the exterior
-Foundation: Type of foundation
-BsmtQual: Height of the basement
-BsmtCond: General condition of the basement
-BsmtExposure: Walkout or garden level basement walls
-BsmtFinType1: Quality of basement finished area
-BsmtFinSF1: Type 1 finished square feet
-BsmtFinType2: Quality of second finished area (if present)
-BsmtFinSF2: Type 2 finished square feet
-BsmtUnfSF: Unfinished square feet of basement area
-TotalBsmtSF: Total square feet of basement area
-Heating: Type of heating
-HeatingQC: Heating quality and condition
-CentralAir: Central air conditioning
-Electrical: Electrical system
-1stFlrSF: First Floor square feet
-2ndFlrSF: Second floor square feet
-LowQualFinSF: Low quality finished square feet (all floors)
-GrLivArea: Above grade (ground) living area square feet
-BsmtFullBath: Basement full bathrooms
-BsmtHalfBath: Basement half bathrooms
-FullBath: Full bathrooms above grade
-HalfBath: Half baths above grade
-Bedroom: Number of bedrooms above basement level
-Kitchen: Number of kitchens
-KitchenQual: Kitchen quality
-TotRmsAbvGrd: Total rooms above grade (does not include bathrooms)
-Functional: Home functionality rating
-Fireplaces: Number of fireplaces
-FireplaceQu: Fireplace quality
-GarageType: Garage location
-GarageYrBlt: Year garage was built
-GarageFinish: Interior finish of the garage
-GarageCars: Size of garage in car capacity
-GarageArea: Size of garage in square feet
-GarageQual: Garage quality
-GarageCond: Garage condition
-PavedDrive: Paved driveway
-WoodDeckSF: Wood deck area in square feet
-OpenPorchSF: Open porch area in square feet
-EnclosedPorch: Enclosed porch area in square feet
-3SsnPorch: Three season porch area in square feet
-ScreenPorch: Screen porch area in square feet
-PoolArea: Pool area in square feet
-PoolQC: Pool quality
-Fence: Fence quality
-MiscFeature: Miscellaneous feature not covered in other categories
-MiscVal: $Value of miscellaneous feature
-MoSold: Month Sold
-YrSold: Year Sold
-SaleType: Type of sale
-SaleCondition: Condition of sale
+Task Overview: 
+DDSAnalytics: Specializes in talent management solutions for Fortune 100 companies. 
+Talent management is defined as the iterative process of developing and retaining employees. 
+Task: Predict employee turnover 
+Perform EDA of existing employee data. 
+Provide Job Role insights
+Identify Top 3 Contributors & Predict Attrition (Sensitivity & Specificity > 66%)
+Predict Monthly Salary (RMSE < $3000)
+
+
+FYI: 
+Data Definitions: 
+
+JobInvolvement	1 'Low'
+	2 'Medium'
+	3 'High'
+	4 'Very High'
+	
+JobSatisfaction	1 'Low'
+	2 'Medium'
+	3 'High'
+	4 'Very High'
+	
+PerformanceRating	1 'Low'
+	2 'Good'
+	3 'Excellent'
+	4 'Outstanding'
+	
+RelationshipSatisfaction	1 'Low'
+	2 'Medium'
+	3 'High'
+	4 'Very High'
+	
+WorkLifeBalance	1 'Bad'
+	2 'Good'
+	3 'Better'
+	4 'Best'
+
+
+
+FAQ and Comments:
+
+1.  Question: In the dataset, what does Relationship Satisfaction mean...(relationship to manager, to peers)
+
+Relationship satisfaction with manager. 
+
+2. Advice: Don't eliminate variables simply because they have a high correlation with one another.  This is an indication that they do share some information although the information they don't share may be correlated with the response individually.  
+
+3. Advice: When plotting and exploring attrition, the percentage of those who left is probably more useful than the count.  
+
+4. Question: In the dataset, is the distance from home in miles or kilos?
+We don't have that information (however we do know whether its high or low)
+
+
+5.  Question: In the dataset: what is the definition of pay rates: Hourly, Daily & Monthly.  These values to not seem to relate to each other or the Monthly Salary (which is different than Monthly Rate).
+ 
+We don't have that information (however we do know whether they are high or low). They may or may not relate to each other or the monthly salary (this is for the student to infer and decide whether theres any correlation or whether this is a useful feature for attrition)
+
+6. Question: In the dataset: we do see that Job Levels go from 1-5 and assume that 1 may symbolize a lower level employee, but this is not defined.  Though this level does have a positive linear relationship with Monthly Income, it does not seem to correlate well with the Job Titles. in other words someone with a Director can be a 2-5, and manager a 3-5.
+
+Yes we can assume 1 is a lower job level than 5. 
+
+7. Question: In the dataset, does overtime mean Hourly vs. Salaried worker?
+
+
+We can assume that people with overtime are non-exempt employees. 
+
+8 Question: In the dataset, Performance Ratings are only 3 & 4, is there a mistake?  Unless a corrupted system, hard to imagine ratings consistently high, even as 2 still means "good".
+It is self-reported data, think about why the employees may only answer 3 and 4
+
+No this is the only data we have, there is no mistake. 
+
+9 Question: In the dataset, does Training times mean: hours, weeks, or instances and over what period?
+
+Training times last year means number of training sessions attended by the employee. 
+
