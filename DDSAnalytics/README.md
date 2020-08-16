@@ -11,7 +11,7 @@ Youtube(Presentation): https://youtu.be/1Cs0W_6meC8
 R-Shiny App(EDA): https://dawson-data-science.shinyapps.io/DDSCaseStudy2/   
   
 Tabs
-- Data: csv(s) used in analysis
+- Data: csv(s) used in analysis, including prediction files in .csv format   
 - Documentation: Provided context docuuments
 - Presentation: Youtube & Powerpoint Files
 - Rshiny: ui/server files
